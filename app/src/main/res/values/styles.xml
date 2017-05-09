@@ -17,4 +17,40 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AppTheme.Text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="AppTheme.Text.T12">
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+    </style>
+    <style name="AppTheme.Text.HintText" parent="AppTheme.Text.T12">
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="AppTheme.EditText2">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:colorActivatedHighlight">#8C8989</item>
+        <item name="android:colorFocusedHighlight">#8C8989</item>
+    </style>
+
+    <style name="AppTheme.Text.ErrorText" parent="AppTheme.Text.T12">
+        <item name="android:textColor">@color/errorColor</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+    </style>
+
+    <style name="AppTheme.Text.TextInputLayout">
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:textColorHint">@color/textColor</item>
+    </style>
+
+
 </resources>

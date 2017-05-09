@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/title_layout"
+                    style="@style/AppTheme.Text.TextInputLayout"
+                    app:errorTextAppearance="@style/AppTheme.Text.ErrorText"
+                    app:hintTextAppearance="@style/AppTheme.Text.HintText">
+
+                    <EditText
+                        android:id="@+id/title"
+                        style="@style/AppTheme.EditText2"
+                        android:hint="Title"
+                        android:inputType="text" />
+                </android.support.design.widget.TextInputLayout>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/category_layout"
+                    style="@style/AppTheme.Text.TextInputLayout"
+                    app:errorTextAppearance="@style/AppTheme.Text.ErrorText"
+                    app:hintTextAppearance="@style/AppTheme.Text.HintText">
+
+                    <EditText
+                        android:id="@+id/category"
+                        style="@style/AppTheme.EditText2"
+                        android:hint="Category"
+                        android:inputType="text" />
+                </android.support.design.widget.TextInputLayout>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="140dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/description_layout"
+                    style="@style/AppTheme.Text.TextInputLayout"
+                    app:errorTextAppearance="@style/AppTheme.Text.ErrorText"
+                    app:hintTextAppearance="@style/AppTheme.Text.HintText">
+
+                    <EditText
+                        android:id="@+id/description"
+                        style="@style/AppTheme.EditText2"
+                        android:hint="Description"
+                        android:inputType="text" />
+                </android.support.design.widget.TextInputLayout>
+
+            </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="230dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/textColor"
+                android:textAlignment="center"
+                android:text="Choosh file"/>
+
+            <ImageView
+                android:id="@+id/ivAttachment"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/attach_icon"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+
+        </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_file_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor"
+                android:layout_marginTop="300dp"
+
+                android:layout_below="@+id/ivAttachment"
+                android:layout_centerHorizontal="true"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp">
+
+                <Button
+                    android:id="@+id/b_upload"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="300dp"
+                    android:background="@drawable/button"
+                    android:text="CREATE NEW EVENT"
+                    android:textColor="@color/white"
+                    android:textSize="22dp"
+                    android:textStyle="bold" />
+            </FrameLayout>
+
+
+        </FrameLayout>
+
+    </ScrollView>
+
+</FrameLayout>
