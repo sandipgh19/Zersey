@@ -19,7 +19,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     List<Card> items;
 
-    public CardAdapter(String[] title,String[] category,String[] description, Bitmap[] images) {
+    public CardAdapter(String[] title,String[] category,String[] description,String[] urls, Bitmap[] images) {
         super();
         items = new ArrayList<Card>();
         for (int i = 0; i < title.length; i++) {
@@ -27,6 +27,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             item.setTitle(title[i]);
             item.setCategory(category[i]);
             item.setDescription(description[i]);
+            item.setUrl(urls[i]);
             item.setImage(images[i]);
             items.add(item);
         }
@@ -47,6 +48,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         holder.title.setText(list.getTitle());
         holder.description.setText(list.getDescription());
         holder.category.setText(list.getCategory());
+        holder.textViewUrl.setText(list.getUrl());
     }
 
     @Override
@@ -59,6 +61,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         public TextView title;
         public TextView category;
         public TextView description;
+        public TextView textViewUrl;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -69,6 +72,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             description = (TextView) itemView.findViewById(R.id.description);
 
             title = (TextView) itemView.findViewById(R.id.title);
+
+            textViewUrl = (TextView) itemView.findViewById(R.id.url);
 
         }
     }

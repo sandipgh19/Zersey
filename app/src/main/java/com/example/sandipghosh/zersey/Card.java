@@ -12,6 +12,7 @@ public class Card {
     private Bitmap image;
     private String category;
     private String description;
+    private String url;
 
     public String getTitle() {
         return title;
@@ -35,6 +36,14 @@ public class Card {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
 

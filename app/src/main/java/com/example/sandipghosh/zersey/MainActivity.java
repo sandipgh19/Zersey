@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -61,6 +62,13 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        recyclerView = (RecyclerView) findViewById(R.id.recycle);
+        recyclerView.setHasFixedSize(true);
+
+        layoutManager = new LinearLayoutManager(this);
+
+        recyclerView.setLayoutManager(layoutManager);
 
         getData();
     }
@@ -165,7 +173,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void showData(){
-        adapter = new CardAdapter(Config.title,Config.category,Config.description, Config.bitmaps);
+        adapter = new CardAdapter(Config.title,Config.category,Config.description,Config.urls, Config.bitmaps);
         recyclerView.setAdapter(adapter);
     }
 
