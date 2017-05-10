@@ -37,7 +37,7 @@ public class GetBitmap extends AsyncTask<Void,Void,Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         loading.dismiss();
-       // mainActivity.showData();
+        mainActivity.showData();
     }
 
     @Override

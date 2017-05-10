@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        getData();
     }
 
     @Override
@@ -176,9 +178,12 @@ public class MainActivity extends AppCompatActivity
 
             for(int i=0; i<array.length(); i++){
                 JSONObject j = array.getJSONObject(i);
-                Config.title[i] = getName(j);
+                Config.title[i] = getTitle(j);
                 Config.urls[i] = getURL(j);
-                Config.description[i] = getName(j);
+                Config.description[i] = getDescription(j);
+                Config.category[i] = getCategory(j);
+
+
             }
 
         } catch (JSONException e) {
@@ -187,16 +192,38 @@ public class MainActivity extends AppCompatActivity
 
         GetBitmap gb = new GetBitmap(this,this, Config.urls);
         gb.execute();
+
+
     }
 
-    private String getName(JSONObject j){
-        String name = null;
+    private String getDescription(JSONObject j){
+        String description = null;
         try {
-            name = j.getString(Config.TAG_IMAGE_TITLE);
+            description = j.getString(Config.TAG_IMAGE_DESCRIPTION);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return name;
+        return description;
+    }
+
+    private String getCategory(JSONObject j){
+        String category = null;
+        try {
+            category = j.getString(Config.TAG_IMAGE_CATEGORY);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return category;
+    }
+
+    private String getTitle(JSONObject j){
+        String title = null;
+        try {
+            title = j.getString(Config.TAG_IMAGE_TITLE);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return title;
     }
 
 

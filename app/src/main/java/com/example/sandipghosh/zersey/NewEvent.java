@@ -47,8 +47,8 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
     private static final int PICK_FILE_REQUEST = 1;
     private static final String TAG = MainActivity.class.getSimpleName();
     private String selectedFilePath;
-    private String SERVER_URL = "";
-    private String Data_URL = "";
+    private String SERVER_URL = "https://sandipgh19.000webhostapp.com/zersey/send.php";
+    private String Data_URL = "https://sandipgh19.000webhostapp.com/zersey/send.php";
     ImageView ivAttachment;
     Button bUpload;
     TextView tvFileName;
@@ -118,7 +118,7 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
 
             //on upload button Click
             if(selectedFilePath != null){
-               /* dialog = ProgressDialog.show(NewEvent.this,"","Uploading File...",true);
+                dialog = ProgressDialog.show(NewEvent.this,"","Uploading File...",true);
 
                 new Thread(new Runnable() {
                     @Override
@@ -126,9 +126,9 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
                         //creating new thread to handle Http Operations
                         uploadFile(selectedFilePath);
                     }
-                }).start();*/
+                }).start();
 
-               sendData();
+              // sendData();
             }else{
                 Toast.makeText(NewEvent.this,"Please choose a File First",Toast.LENGTH_SHORT).show();
             }
@@ -174,6 +174,14 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
     //android upload file to server
     public int uploadFile(final String selectedFilePath){
 
+        final String userTitle1 = title.getText().toString();
+        final String userCatagory1 = category.getText().toString();
+        final String userDescription1 = description.getText().toString();
+
+        Log.i("user11",userTitle1);
+        Log.i("user12",userCatagory1);
+        Log.i("user13",userDescription1);
+
         int serverResponseCode = 0;
 
         HttpURLConnection connection;
@@ -215,6 +223,10 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
                 connection.setRequestProperty("ENCTYPE", "multipart/form-data");
                 connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
                 connection.setRequestProperty("uploaded_file",selectedFilePath);
+                connection.setRequestProperty("title",userTitle1);
+                connection.setRequestProperty("category",userCatagory1);
+                connection.setRequestProperty("description",userDescription1);
+
 
                 //creating new dataoutputstream
                 dataOutputStream = new DataOutputStream(connection.getOutputStream());
@@ -224,7 +236,34 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
                 dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
                         + selectedFilePath + "\"" + lineEnd);
 
+
                 dataOutputStream.writeBytes(lineEnd);
+
+            /*    dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
+                dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"title\""
+                        +lineEnd);
+                dataOutputStream.writeBytes(lineEnd);
+                dataOutputStream.writeBytes(userTitle);
+                dataOutputStream.writeBytes(lineEnd);
+
+
+                dataOutputStream.writeBytes(lineEnd);
+
+                dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
+                dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"category\""
+                        +lineEnd);
+                dataOutputStream.writeBytes(lineEnd);
+                dataOutputStream.writeBytes(userCatagory);
+                dataOutputStream.writeBytes(lineEnd);
+
+                dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
+                dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"description\""
+                        +lineEnd);
+                dataOutputStream.writeBytes(lineEnd);
+                dataOutputStream.writeBytes(userDescription);
+                dataOutputStream.writeBytes(lineEnd);*/
+
+                //dataOutputStream.writeBytes(lineEnd);
 
                 //returns no. of bytes present in fileInputStream
                 bytesAvailable = fileInputStream.available();
@@ -306,7 +345,9 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
                         @Override
                         public void onResponse(String response) {
 
-                            dialog = ProgressDialog.show(NewEvent.this, "", "Uploading File...", true);
+                            Log.i("user1",response);
+
+                         /*   dialog = ProgressDialog.show(NewEvent.this, "", "Uploading File...", true);
 
                             new Thread(new Runnable() {
                                 @Override
@@ -314,7 +355,7 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
                                     //creating new thread to handle Http Operations
                                     uploadFile(selectedFilePath);
                                 }
-                            }).start();
+                            }).start();*/
                         }
                     },
                     new Response.ErrorListener() {

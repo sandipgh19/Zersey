@@ -14,10 +14,10 @@ public class Config {
     public static String[] description;
     public static String[] urls;
 
-    public static final String GET_URL = "http://simplifiedcoding.16mb.com/CardView/getData.php";
-    public static final String TAG_IMAGE_TITLE = "url";
-    public static final String TAG_IMAGE_CATEGORY = "name";
-    public static final String TAG_IMAGE_DESCRIPTION = "";
+    public static final String GET_URL = "http://sandipgh19.000webhostapp.com/zersey/getData.php";
+    public static final String TAG_IMAGE_TITLE = "title";
+    public static final String TAG_IMAGE_CATEGORY = "category";
+    public static final String TAG_IMAGE_DESCRIPTION = "description";
     public static final String TAG_IMAGE_URL = "url";
     public static final String TAG_JSON_ARRAY="result";
 
