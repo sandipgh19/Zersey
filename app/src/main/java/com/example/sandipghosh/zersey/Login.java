@@ -63,7 +63,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         password = (EditText) findViewById(R.id.password);
         emailInput = (TextInputLayout) findViewById(R.id.email_layout);
         passwordInput = (TextInputLayout) findViewById(R.id.password_layout);
-        scrollView = (ScrollView) findViewById(R.id.scrollViewSignup);
+        scrollView = (ScrollView) findViewById(R.id.scrollViewLogin);
         user = new User();
 
         sharedPreferences = getSharedPreferences("ZerseyDetails", Context.MODE_PRIVATE);

@@ -7,4 +7,5 @@
     <color name="textColor">#1F2020</color>
     <color name="white">#ffffff</color>
     <color name="yellow">#FFC200</color>
+    <color name="gray">#808080</color>
 </resources>

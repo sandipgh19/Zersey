@@ -19,7 +19,14 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        style="@style/MyActionBarTabStyle"
         app:headerLayout="@layout/nav_header_main"
+        android:background="#7D9C9E"
+        android:backgroundTint="#7D9C9E"
+        app:itemBackground="@drawable/rectangle"
+        app:itemIconTint="@color/white"
+        app:elevation="0dp"
+        app:itemTextColor="@color/white"
         app:menu="@menu/activity_main_drawer" />
 
 </android.support.v4.widget.DrawerLayout>
