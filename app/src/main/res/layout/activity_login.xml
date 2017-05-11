@@ -12,8 +12,8 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            android:elevation="0dp"
             android:layout_width="match_parent"
+            android:elevation="0dp"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
@@ -22,11 +22,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/scrollViewLogin">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -34,15 +36,15 @@
                 android:layout_marginTop="70dp">
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/title_layout"
+                    android:id="@+id/email_layout"
                     style="@style/AppTheme.Text.TextInputLayout"
                     app:errorTextAppearance="@style/AppTheme.Text.ErrorText"
                     app:hintTextAppearance="@style/AppTheme.Text.HintText">
 
                     <EditText
-                        android:id="@+id/title"
+                        android:id="@+id/email"
                         style="@style/AppTheme.EditText2"
-                        android:hint="Title"
+                        android:hint="Email"
                         android:inputType="text" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -54,91 +56,34 @@
                 android:layout_marginTop="140dp">
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/category_layout"
+                    android:id="@+id/password_layout"
                     style="@style/AppTheme.Text.TextInputLayout"
                     app:errorTextAppearance="@style/AppTheme.Text.ErrorText"
                     app:hintTextAppearance="@style/AppTheme.Text.HintText">
 
                     <EditText
-                        android:id="@+id/category"
+                        android:id="@+id/password"
                         style="@style/AppTheme.EditText2"
-                        android:hint="Category"
-                        android:inputType="text" />
+                        android:hint="Password"
+                        android:inputType="textPassword" />
                 </android.support.design.widget.TextInputLayout>
 
             </FrameLayout>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="210dp">
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/description_layout"
-                    style="@style/AppTheme.Text.TextInputLayout"
-                    app:errorTextAppearance="@style/AppTheme.Text.ErrorText"
-                    app:hintTextAppearance="@style/AppTheme.Text.HintText">
-
-                    <EditText
-                        android:id="@+id/description"
-                        style="@style/AppTheme.EditText2"
-                        android:hint="Description"
-                        android:inputType="text" />
-                </android.support.design.widget.TextInputLayout>
-
-            </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="300dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_marginTop="15dp"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/textColor"
-                android:textAlignment="center"
-                android:text="Choosh file"/>
-
-            <ImageView
-                android:id="@+id/ivAttachment"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:src="@drawable/attach_icon"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"/>
-
-        </FrameLayout>
-
-            <TextView
-                android:id="@+id/tv_file_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textColor"
-                android:layout_marginTop="370dp"
-
-                android:layout_below="@+id/ivAttachment"
-                android:layout_centerHorizontal="true"/>
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="140dp">
+                android:layout_height="wrap_content">
 
                 <Button
-                    android:id="@+id/b_upload"
+                    android:id="@+id/login"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
-                    android:layout_marginTop="300dp"
+                    android:layout_marginTop="250dp"
                     android:background="@drawable/button"
-                    android:text="CREATE NEW EVENT"
+                    android:text="LOG IN"
                     android:textColor="@color/white"
                     android:textSize="22dp"
                     android:textStyle="bold" />
@@ -148,5 +93,7 @@
         </FrameLayout>
 
     </ScrollView>
+
+
 
 </FrameLayout>

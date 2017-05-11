@@ -3,7 +3,9 @@ package com.example.sandipghosh.zersey;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -11,7 +13,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,12 +57,14 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
     private static final String TAG = MainActivity.class.getSimpleName();
     private String selectedFilePath;
     private String SERVER_URL = "https://sandipgh19.000webhostapp.com/zersey/send.php";
-    private String Data_URL = "https://sandipgh19.000webhostapp.com/zersey/send.php";
     ImageView ivAttachment;
     Button bUpload;
     TextView tvFileName;
     EditText title,category,description;
     ProgressDialog dialog;
+    SharedPreferences sharedPreferences;
+    String name,email;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +72,15 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
         setContentView(R.layout.activity_new);
 
         requestStoragePermission();
+
+        setTitle("New Event");
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        sharedPreferences = getSharedPreferences("ZerseyDetails", Context.MODE_PRIVATE);
+        name = sharedPreferences.getString("name","");
+        email = sharedPreferences.getString("email","");
 
         title = (EditText) findViewById(R.id.title);
         category = (EditText) findViewById(R.id.category);
@@ -197,6 +213,8 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
                     .addParameter("title", userTitle)//Adding text parameter to the request
                     .addParameter("category",userCatagory)
                     .addParameter("description",userDescription)
+                    .addParameter("email",email)
+                    .addParameter("name",name)
                     .setNotificationConfig(new UploadNotificationConfig())
                     .setMaxRetries(2)
                     .startUpload(); //Starting the upload
@@ -207,12 +225,30 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
 
         dialog.dismiss();
 
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this,SecondActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
 
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

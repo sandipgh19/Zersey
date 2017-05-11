@@ -38,6 +38,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/url"
                 android:visibility="gone"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tap for like and comment"/>
 
         </LinearLayout>
     </android.support.v7.widget.CardView>

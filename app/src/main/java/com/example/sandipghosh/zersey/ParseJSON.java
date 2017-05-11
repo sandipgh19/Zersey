@@ -25,7 +25,7 @@ public class ParseJSON {
         this.json = json;
     }
 
-    protected void parseJSON_follow(){
+    protected void parseJSON(){
         JSONObject jsonObject=null;
         try {
             jsonObject = new JSONObject(json);

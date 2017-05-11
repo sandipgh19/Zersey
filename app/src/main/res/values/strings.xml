@@ -1,8 +1,12 @@
 <resources>
-    <string name="app_name">Zersey</string>
+    <string name="app_name">Events</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_logout">Log Out</string>
+
+    <string name="error_username">please fill username</string>
+    <string name="error_email">invalid email id</string>
+    <string name="error_password">min 6 characters required in password</string>
 </resources>
