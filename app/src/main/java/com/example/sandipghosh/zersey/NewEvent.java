@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +67,12 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
     SharedPreferences sharedPreferences;
     String name,email;
     Toolbar toolbar;
+    private TextInputLayout titleInput;
+    private TextInputLayout categoryInput;
+    private TextInputLayout descriptionInput;
+    private ScrollView scrollView;
+
+    String userTitle,userCatagory,userDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +96,12 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
         ivAttachment = (ImageView) findViewById(R.id.ivAttachment);
         bUpload = (Button) findViewById(R.id.b_upload);
         tvFileName = (TextView) findViewById(R.id.tv_file_name);
+
+        titleInput = (TextInputLayout) findViewById(R.id.title_layout);
+        categoryInput = (TextInputLayout) findViewById(R.id.category_layout);
+        descriptionInput = (TextInputLayout) findViewById(R.id.description_layout);
+        scrollView = (ScrollView) findViewById(R.id.scrollViewNew);
+
         ivAttachment.setOnClickListener(this);
         bUpload.setOnClickListener(this);
     }
@@ -136,9 +150,42 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
         }
         if(v== bUpload){
 
+           // dialog = ProgressDialog.show(NewEvent.this,"","Uploading File...",true);
+
+            userTitle = title.getText().toString();
+            userCatagory = category.getText().toString();
+            userDescription = description.getText().toString();
+
+            Log.i("user11",userTitle);
+            Log.i("user12",userCatagory);
+            Log.i("user13",userDescription);
+
+            String errorMessage;
+            if (userTitle.equals("")) {
+                errorMessage = getString(R.string.error_title);
+                titleInput.setErrorEnabled(true);
+                titleInput.setError(errorMessage);
+                scrollView.smoothScrollTo(0, titleInput.getTop());
+                return;
+            }
+            if (userCatagory.equals("")) {
+                errorMessage = getString(R.string.error_catagory);
+                categoryInput.setErrorEnabled(true);
+                categoryInput.setError(errorMessage);
+                scrollView.smoothScrollTo(0, categoryInput.getTop());
+                return;
+            }
+
+            if (userDescription.equals("")) {
+                errorMessage = getString(R.string.error_description);
+                descriptionInput.setErrorEnabled(true);
+                descriptionInput.setError(errorMessage);
+                scrollView.smoothScrollTo(0, descriptionInput.getTop());
+                return;
+            }
+
             //on upload button Click
             if(selectedFilePath != null){
-                dialog = ProgressDialog.show(NewEvent.this,"","Uploading File...",true);
 
                 new Thread(new Runnable() {
                     @Override
@@ -194,14 +241,6 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
     //android upload file to server
     public void uploadFile(final String selectedFilePath){
 
-        final String userTitle = title.getText().toString();
-        final String userCatagory = category.getText().toString();
-        final String userDescription = description.getText().toString();
-
-        Log.i("user11",userTitle);
-        Log.i("user12",userCatagory);
-        Log.i("user13",userDescription);
-
 
         //Uploading code
         try {
@@ -223,11 +262,11 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
             Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
-        dialog.dismiss();
+       // dialog.dismiss();
 
-        Intent intent = new Intent(this,SecondActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        //Intent intent = new Intent(this,SecondActivity.class);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+       // startActivity(intent);
 
 
 
@@ -245,10 +284,23 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                Intent intent = new Intent(this,SecondActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed(){
+        // code here to show dialog
+       // super.onBackPressed();  // optional depending on your needs
+        Intent intent = new Intent(this,SecondActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
 
 }

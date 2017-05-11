@@ -1,5 +1,6 @@
 package com.example.sandipghosh.zersey;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,6 +46,7 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
     private static final String SIGNUP_URL = "https://sandipgh19.000webhostapp.com/zersey/register.php";
     private SharedPreferences sharedPreferences;
     Toolbar toolbar;
+    ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,12 +121,16 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
             return;
             }
 
+        dialog = ProgressDialog.show(Signup.this,"","Sign Up...",true);
+
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,SIGNUP_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Log.i("MY TEST",response);
+
+                        dialog.dismiss();
 
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
@@ -154,7 +160,7 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Signup.this,error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(Signup.this,"Something Went Wrong", Toast.LENGTH_LONG).show();
                     }
                 }){
             protected Map<String,String> getParams(){

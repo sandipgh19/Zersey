@@ -45,7 +45,7 @@
                         android:id="@+id/email"
                         style="@style/AppTheme.EditText2"
                         android:hint="Email"
-                        android:inputType="text" />
+                        android:inputType="textEmailAddress" />
                 </android.support.design.widget.TextInputLayout>
 
             </FrameLayout>

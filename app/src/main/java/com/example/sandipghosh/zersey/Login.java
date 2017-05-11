@@ -1,5 +1,6 @@
 package com.example.sandipghosh.zersey;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,6 +46,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private static final String LOGIN_URL = "https://sandipgh19.000webhostapp.com/zersey/login.php";
     private SharedPreferences sharedPreferences;
     Toolbar toolbar;
+    ProgressDialog dialog;
 
 
     @Override
@@ -109,6 +111,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             return;
         }
 
+        dialog = ProgressDialog.show(Login.this,"","Log In...",true);
+
+        Log.i("MY Email",user.getEmail());
+        Log.i("MY Password",user.getPassword());
+
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,LOGIN_URL,
                 new Response.Listener<String>() {
@@ -116,19 +123,27 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     public void onResponse(String response) {
                         Log.i("MY TEST",response);
 
+                        dialog.dismiss();
+
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             JSONArray result = jsonObject.getJSONArray("result");
                             JSONObject Data = result.getJSONObject(0);
-                            user.setName(Data.getString("name"));
-                            User.saveLoginCredentials(sharedPreferences,
-                                    user.getEmail(),
-                                    user.getName());
-                            Intent intent = new Intent(Login.this, SecondActivity.class);
-                            setResult(RESULT_OK, intent);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                            finish();
+                            String message = Data.getString("message");
+                            if(message.equals("Success")) {
+                                user.setName(Data.getString("name"));
+                                User.saveLoginCredentials(sharedPreferences,
+                                        user.getEmail(),
+                                        user.getName());
+                                Intent intent = new Intent(Login.this, SecondActivity.class);
+                                setResult(RESULT_OK, intent);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                finish();
+                            } else {
+
+                                Toast.makeText(Login.this,message,Toast.LENGTH_LONG).show();
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

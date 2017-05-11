@@ -9,4 +9,7 @@
     <string name="error_username">please fill username</string>
     <string name="error_email">invalid email id</string>
     <string name="error_password">min 6 characters required in password</string>
+    <string name="error_title">please fill title</string>
+    <string name="error_catagory">please fill category</string>
+    <string name="error_description">please fill description</string>
 </resources>
