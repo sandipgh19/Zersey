@@ -24,6 +24,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static java.lang.System.exit;
+
 /**
  * Created by sandipghosh on 11/05/17.
  */
@@ -92,7 +94,7 @@ public class SecondActivity extends AppCompatActivity {
             User.removeLoginCredentials(sharedPreferences);
 
             Intent intent = new Intent(this,SplashActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
             return true;
@@ -215,5 +217,15 @@ public class SecondActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return url;
+    }
+    @Override
+    public void onBackPressed(){
+        // code here to show dialog
+        // super.onBackPressed();  // optional depending on your needs
+      /*  Intent intent = new Intent(this,SecondActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();*/
+      exit(0);
     }
 }

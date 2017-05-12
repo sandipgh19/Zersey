@@ -298,7 +298,7 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
         // code here to show dialog
        // super.onBackPressed();  // optional depending on your needs
         Intent intent = new Intent(this,SecondActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }

@@ -135,9 +135,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                 User.saveLoginCredentials(sharedPreferences,
                                         user.getEmail(),
                                         user.getName());
-                                Intent intent = new Intent(Login.this, SecondActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), SecondActivity.class);
                                 setResult(RESULT_OK, intent);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 finish();
                             } else {

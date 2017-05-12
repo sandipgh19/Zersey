@@ -1,7 +1,9 @@
 package com.example.sandipghosh.zersey;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
     private Config config;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +49,20 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        sharedPreferences = getSharedPreferences("ZerseyDetails", Context.MODE_PRIVATE);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Please Login YourSelf", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
 
-
+                if (sharedPreferences.getString("email", "").length() == 0) {
+                    Snackbar.make(view, "Please Login YourSelf", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                } else {
+                    Intent intent = new Intent(MainActivity.this,NewEvent.class);
+                    startActivity(intent);
+                }
             }
         });
 
