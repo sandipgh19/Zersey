@@ -10,18 +10,21 @@ public class User {
     private String Email;
     private String Password;
     private String Name;
+    private String Mobile;
 
 
 
     private static final String EMAIL = "email";
     private static final String PASSWORD = "password";
     private static final String NAME = "name";
+    private static final String MOBILE = "mobile";
 
 
     public User() {
         Email = "";
         Password = "";
         Name = "";
+        Mobile = "";
     }
 
     public String getEmail() {
@@ -48,8 +51,13 @@ public class User {
         Name = name;
     }
 
+    public String getMobile() {
+        return Mobile;
+    }
 
-
+    public void setMobile(String mobile) {
+        Mobile = mobile;
+    }
 
     public static boolean emailValid(String email){
         String EMAIL_REGEX = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
@@ -74,12 +82,24 @@ public class User {
         }
     }
 
+    public static boolean MobileValid(String mobile){
+
+        String regEx = "^[0-9]{10}$";
+        if (mobile.matches(regEx)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static void saveLoginCredentials(SharedPreferences sharedPreferences,
+                                            String name,
                                             String email,
-                                            String name) {
+                                            String mobile) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(EMAIL, email);
         editor.putString(NAME, name);
+        editor.putString("","");
         editor.commit();
     }
 

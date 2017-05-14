@@ -36,12 +36,13 @@ import java.util.Map;
 
 public class Signup extends AppCompatActivity implements View.OnClickListener {
 
-    EditText name,email,password;
+    EditText name,email,password,mobile;
     Button signup;
     private User user;
     private TextInputLayout emailInput;
     private TextInputLayout passwordInput;
     private TextInputLayout nameInput;
+    private TextInputLayout mobileInput;
     private ScrollView scrollView;
     private static final String SIGNUP_URL = "https://sandipgh19.000webhostapp.com/zersey/register.php";
     private SharedPreferences sharedPreferences;
@@ -61,9 +62,11 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
         name = (EditText) findViewById(R.id.name);
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
+        mobile = (EditText) findViewById(R.id.mobile);
         emailInput = (TextInputLayout) findViewById(R.id.email_layout);
         passwordInput = (TextInputLayout) findViewById(R.id.password_layout);
         nameInput = (TextInputLayout) findViewById(R.id.name_layout);
+        mobileInput = (TextInputLayout) findViewById(R.id.mobile_layout);
         scrollView = (ScrollView) findViewById(R.id.scrollViewSignup);
         user = new User();
 
@@ -93,6 +96,7 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
         user.setName(name.getText().toString());
         user.setEmail(email.getText().toString());
         user.setPassword(password.getText().toString());
+        user.setMobile(mobile.getText().toString());
 
         passwordInput.setErrorEnabled(false);
         nameInput.setErrorEnabled(false);
@@ -121,6 +125,15 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
             return;
             }
 
+        if(!User.MobileValid(user.getMobile())) {
+            errorMessage = getString(R.string.error_mobile);
+            mobileInput.setErrorEnabled(true);
+            mobileInput.setError(errorMessage);
+            scrollView.smoothScrollTo(0, mobileInput.getTop());
+            return;
+
+        }
+
         dialog = ProgressDialog.show(Signup.this,"","Sign Up...",true);
 
 
@@ -137,16 +150,20 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
                             String message;
                             boolean success = jsonResponse.getBoolean("error");
                             message =jsonResponse.getString("message") ;
-                            if (message.equals("Success")) {
+                           // if (message.equals("Success")) {
+                            if(!success) {
 
-                                User.saveLoginCredentials(sharedPreferences,
+                                Intent intent = new Intent(Signup.this,Verification.class);
+                                startActivity(intent);
+
+                              /*  User.saveLoginCredentials(sharedPreferences,
                                         user.getEmail(),
                                         user.getName());
                                 Intent intent = new Intent(getApplicationContext(), SecondActivity.class);
                                 setResult(RESULT_OK, intent);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
-                                finish();
+                                finish();*/
                             } else {
 
                                 Toast.makeText(Signup.this,message,Toast.LENGTH_LONG).show();
@@ -169,6 +186,7 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
                 params.put("name",user.getName());
                 params.put("email",user.getEmail());
                 params.put("password",user.getPassword());
+                params.put("mobile",user.getMobile());
                 return params;
             }
 

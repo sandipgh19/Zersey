@@ -12,4 +12,5 @@
     <string name="error_title">please fill title</string>
     <string name="error_catagory">please fill category</string>
     <string name="error_description">please fill description</string>
+    <string name="error_mobile">invalid mobile no</string>
 </resources>
