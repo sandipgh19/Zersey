@@ -97,6 +97,40 @@
 
             </FrameLayout>
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="290dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/mobile_layout"
+                    style="@style/AppTheme.Text.TextInputLayout"
+                    app:errorTextAppearance="@style/AppTheme.Text.ErrorText"
+                    app:hintTextAppearance="@style/AppTheme.Text.HintText">
+
+                    <EditText
+                        android:id="@+id/mobile"
+                        style="@style/AppTheme.EditText2"
+                        android:hint="Mobile"
+                        android:inputType="number" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="right"
+                        android:textColor="@color/black"
+                        android:alpha=".5"
+                        android:text="You will receive OTP code on this number" />
+                </android.support.design.widget.TextInputLayout>
+
+
+
+            </FrameLayout>
+
+
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -109,7 +143,7 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
-                    android:layout_marginTop="300dp"
+                    android:layout_marginTop="390dp"
                     android:background="@drawable/button"
                     android:text="SIGN UP"
                     android:textColor="@color/white"
