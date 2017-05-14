@@ -22,6 +22,7 @@ public class Verification extends AppCompatActivity implements View.OnClickListe
     TextView mobile;
     Button verify;
     Toolbar toolbar;
+    String no;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +34,21 @@ public class Verification extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Intent intent = getIntent();
+
+        if(intent.getStringExtra("mobile")!= null) {
+
+            no = intent.getStringExtra("mobile");
+
+        }
+
         code = (EditText) findViewById(R.id.confirm);
 
         mobile = (TextView) findViewById(R.id.phone);
 
         verify = (Button) findViewById(R.id.verify);
+
+        mobile.setText(no);
 
         verify.setOnClickListener(this);
 

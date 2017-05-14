@@ -137,7 +137,7 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
         dialog = ProgressDialog.show(Signup.this,"","Sign Up...",true);
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,SIGNUP_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,Config.URL_REQUEST_SMS,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -154,6 +154,7 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
                             if(!success) {
 
                                 Intent intent = new Intent(Signup.this,Verification.class);
+                                intent.putExtra("mobile",user.getMobile());
                                 startActivity(intent);
 
                               /*  User.saveLoginCredentials(sharedPreferences,

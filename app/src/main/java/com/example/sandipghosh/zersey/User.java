@@ -99,7 +99,7 @@ public class User {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(EMAIL, email);
         editor.putString(NAME, name);
-        editor.putString("","");
+        editor.putString(MOBILE,mobile);
         editor.commit();
     }
 
@@ -107,6 +107,7 @@ public class User {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(EMAIL, "");
         editor.putString(NAME, "");
+        editor.putString(MOBILE,"");
         editor.commit();
     }
 

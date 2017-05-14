@@ -63,7 +63,7 @@ public class HttpService extends IntentService {
 
                     if (!error) {
                         // parsing the user profile information
-                      /*  JSONObject profileObj = responseObj.getJSONObject("profile");
+                        JSONObject profileObj = responseObj.getJSONObject("profile");
 
                         String name = profileObj.getString("name");
                         String email = profileObj.getString("email");
@@ -71,9 +71,9 @@ public class HttpService extends IntentService {
 
                         User user= new User();
                        // pref.createLogin(name, email, mobile);
-                        user.saveLoginCredentials(sharedPreferences,name,email,mobile);*/
+                        user.saveLoginCredentials(sharedPreferences,name,email,mobile);
 
-                        Intent intent = new Intent(HttpService.this, MainActivity.class);
+                        Intent intent = new Intent(HttpService.this, SecondActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
 

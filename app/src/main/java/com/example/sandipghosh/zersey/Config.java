@@ -21,8 +21,8 @@ public class Config {
     public static final String TAG_IMAGE_URL = "url";
     public static final String TAG_JSON_ARRAY="result";
 
-    public static final String URL_REQUEST_SMS = "http://192.168.0.101/android_sms/msg91/request_sms.php";
-    public static final String URL_VERIFY_OTP = "http://192.168.0.101/android_sms/msg91/verify_otp.php";
+    public static final String URL_REQUEST_SMS = "https://sandipgh19.000webhostapp.com/zersey/request_sms.php";
+    public static final String URL_VERIFY_OTP = "https://sandipgh19.000webhostapp.com/zersey/verify_otp.php";
 
     // SMS provider identification
     // It should match with your SMS gateway origin
