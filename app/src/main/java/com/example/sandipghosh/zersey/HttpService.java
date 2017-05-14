@@ -24,8 +24,9 @@ import java.util.Map;
 
 public class HttpService extends IntentService {
 
+
     private static String TAG = HttpService.class.getSimpleName();
-    private SharedPreferences sharedPreferences = getSharedPreferences("ZerseyDetails",Context.MODE_PRIVATE);;
+    //private SharedPreferences sharedPreferences = getApplication().getSharedPreferences("ZerseyDetails",Context.MODE_PRIVATE);;
 
     public HttpService() {
         super(HttpService.class.getSimpleName());
@@ -71,7 +72,9 @@ public class HttpService extends IntentService {
 
                         User user= new User();
                        // pref.createLogin(name, email, mobile);
-                        user.saveLoginCredentials(sharedPreferences,name,email,mobile);
+                        PrefManager pref = new PrefManager(getApplicationContext());
+                        pref.createLogin(name, email, mobile);
+                        //user.saveLoginCredentials(sharedPreferences,name,email,mobile);
 
                         Intent intent = new Intent(HttpService.this, SecondActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

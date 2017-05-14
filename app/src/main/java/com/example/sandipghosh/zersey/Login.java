@@ -43,7 +43,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private TextInputLayout emailInput;
     private TextInputLayout passwordInput;
     private ScrollView scrollView;
-    private static final String LOGIN_URL = "https://sandipgh19.000webhostapp.com/zersey/login.php";
+    private static final String LOGIN_URL = "https://sandipgh19.000webhostapp.com/zersey/login1.php";
     private SharedPreferences sharedPreferences;
     Toolbar toolbar;
     ProgressDialog dialog;
@@ -132,9 +132,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             String message = Data.getString("message");
                             if(message.equals("Success")) {
                                 user.setName(Data.getString("name"));
+                                user.setMobile(Data.getString("mobile"));
                                 User.saveLoginCredentials(sharedPreferences,
                                         user.getEmail(),
-                                        user.getName());
+                                        user.getName(),
+                                        user.getMobile());
                                 Intent intent = new Intent(getApplicationContext(), SecondActivity.class);
                                 setResult(RESULT_OK, intent);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

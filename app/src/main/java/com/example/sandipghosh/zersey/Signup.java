@@ -101,6 +101,7 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
         passwordInput.setErrorEnabled(false);
         nameInput.setErrorEnabled(false);
         emailInput.setErrorEnabled(false);
+        mobileInput.setErrorEnabled(false);
 
         String errorMessage;
         if (!User.fieldValid(user.getName())) {
@@ -133,6 +134,8 @@ public class Signup extends AppCompatActivity implements View.OnClickListener {
             return;
 
         }
+
+        Log.i("MY DATA",user.getEmail()+" "+ user.getName()+" "+user.getMobile());
 
         dialog = ProgressDialog.show(Signup.this,"","Sign Up...",true);
 
