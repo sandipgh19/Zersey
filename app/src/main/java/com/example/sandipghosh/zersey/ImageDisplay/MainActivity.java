@@ -1,9 +1,11 @@
-package com.example.sandipghosh.zersey;
+package com.example.sandipghosh.zersey.ImageDisplay;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,8 +19,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.example.sandipghosh.zersey.SupportingFiles.CardAdapter;
+import com.example.sandipghosh.zersey.SupportingFiles.Config;
+import com.example.sandipghosh.zersey.NewEvent;
+import com.example.sandipghosh.zersey.R;
+import com.example.sandipghosh.zersey.auth.Login;
+import com.example.sandipghosh.zersey.auth.Signup;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView.Adapter adapter;
     private Config config;
     SharedPreferences sharedPreferences;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +61,7 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         sharedPreferences = getSharedPreferences("ZerseyDetails", Context.MODE_PRIVATE);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,7 +92,37 @@ public class MainActivity extends AppCompatActivity
 
         recyclerView.setLayoutManager(layoutManager);
 
-        getData();
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                if (dy > 0 ||dy<0 && fab.isShown())
+                {
+                    fab.hide();
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                {
+                    fab.show();
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
+        if(isNetworkAvailable()) {
+
+            getData();
+
+        } else {
+
+            Toast.makeText(this,"Please Check your Internet Connection",Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -231,5 +271,12 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
         return url;
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

@@ -1,4 +1,4 @@
-package com.example.sandipghosh.zersey;
+package com.example.sandipghosh.zersey.auth;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -23,8 +23,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.sandipghosh.zersey.SupportingFiles.Config;
+import com.example.sandipghosh.zersey.R;
+import com.example.sandipghosh.zersey.SupportingFiles.User;
+import com.example.sandipghosh.zersey.Verification;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,67 +38,83 @@ import java.util.Map;
  * Created by sandipghosh on 11/05/17.
  */
 
-public class Login extends AppCompatActivity implements View.OnClickListener {
+public class Signup extends AppCompatActivity implements View.OnClickListener {
 
-    EditText email,password;
-    Button login;
+    EditText name,email,password,mobile;
+    Button signup;
     private User user;
     private TextInputLayout emailInput;
     private TextInputLayout passwordInput;
+    private TextInputLayout nameInput;
+    private TextInputLayout mobileInput;
     private ScrollView scrollView;
-    private static final String LOGIN_URL = "https://sandipgh19.000webhostapp.com/zersey/login1.php";
+    private static final String SIGNUP_URL = "https://sandipgh19.000webhostapp.com/zersey/register.php";
     private SharedPreferences sharedPreferences;
     Toolbar toolbar;
     ProgressDialog dialog;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_signup);
 
-        setTitle("Login");
+        setTitle("Sign Up");
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-
+        name = (EditText) findViewById(R.id.name);
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
+        mobile = (EditText) findViewById(R.id.mobile);
         emailInput = (TextInputLayout) findViewById(R.id.email_layout);
         passwordInput = (TextInputLayout) findViewById(R.id.password_layout);
-        scrollView = (ScrollView) findViewById(R.id.scrollViewLogin);
+        nameInput = (TextInputLayout) findViewById(R.id.name_layout);
+        mobileInput = (TextInputLayout) findViewById(R.id.mobile_layout);
+        scrollView = (ScrollView) findViewById(R.id.scrollViewSignup);
         user = new User();
 
         sharedPreferences = getSharedPreferences("ZerseyDetails", Context.MODE_PRIVATE);
 
 
-        login = (Button) findViewById(R.id.login);
+        signup = (Button) findViewById(R.id.signup);
 
-        login.setOnClickListener(this);
+        signup.setOnClickListener(this);
+
     }
-
 
     @Override
     public void onClick(View v) {
 
-            int id = v.getId();
-            if(id==R.id.login) {
-                //Toast.makeText(this,"Login",Toast.LENGTH_LONG).show();
-                logIn();
-            }
+        int id = v.getId();
+        if(id==R.id.signup) {
+            //Toast.makeText(this,"Login",Toast.LENGTH_LONG).show();
+            signUp();
+
+        }
+
     }
 
-    private void logIn() {
+    private void signUp() {
 
+        user.setName(name.getText().toString());
         user.setEmail(email.getText().toString());
         user.setPassword(password.getText().toString());
+        user.setMobile(mobile.getText().toString());
 
         passwordInput.setErrorEnabled(false);
+        nameInput.setErrorEnabled(false);
         emailInput.setErrorEnabled(false);
+        mobileInput.setErrorEnabled(false);
 
         String errorMessage;
+        if (!User.fieldValid(user.getName())) {
+            errorMessage = getString(R.string.error_username);
+            nameInput.setErrorEnabled(true);
+            nameInput.setError(errorMessage);
+            scrollView.smoothScrollTo(0, nameInput.getTop());
+            return;
+        }
         if (!user.emailValid(user.getEmail())) {
             errorMessage = getString(R.string.error_email);
             emailInput.setErrorEnabled(true);
@@ -109,15 +128,23 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             passwordInput.setError(errorMessage);
             scrollView.smoothScrollTo(0, passwordInput.getTop());
             return;
+            }
+
+        if(!User.MobileValid(user.getMobile())) {
+            errorMessage = getString(R.string.error_mobile);
+            mobileInput.setErrorEnabled(true);
+            mobileInput.setError(errorMessage);
+            scrollView.smoothScrollTo(0, mobileInput.getTop());
+            return;
+
         }
 
-        dialog = ProgressDialog.show(Login.this,"","Log In...",true);
+        Log.i("MY DATA",user.getEmail()+" "+ user.getName()+" "+user.getMobile());
 
-        Log.i("MY Email",user.getEmail());
-        Log.i("MY Password",user.getPassword());
+        dialog = ProgressDialog.show(Signup.this,"","Sign Up...",true);
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,LOGIN_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.URL_REQUEST_SMS,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -126,25 +153,28 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         dialog.dismiss();
 
                         try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            JSONArray result = jsonObject.getJSONArray("result");
-                            JSONObject Data = result.getJSONObject(0);
-                            String message = Data.getString("message");
-                            if(message.equals("Success")) {
-                                user.setName(Data.getString("name"));
-                                user.setMobile(Data.getString("mobile"));
-                                User.saveLoginCredentials(sharedPreferences,
+                            JSONObject jsonResponse = new JSONObject(response);
+                            String message;
+                            boolean success = jsonResponse.getBoolean("error");
+                            message =jsonResponse.getString("message") ;
+                           // if (message.equals("Success")) {
+                            if(!success) {
+
+                                Intent intent = new Intent(Signup.this,Verification.class);
+                                intent.putExtra("mobile",user.getMobile());
+                                startActivity(intent);
+
+                              /*  User.saveLoginCredentials(sharedPreferences,
                                         user.getEmail(),
-                                        user.getName(),
-                                        user.getMobile());
+                                        user.getName());
                                 Intent intent = new Intent(getApplicationContext(), SecondActivity.class);
                                 setResult(RESULT_OK, intent);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
-                                finish();
+                                finish();*/
                             } else {
 
-                                Toast.makeText(Login.this,message,Toast.LENGTH_LONG).show();
+                                Toast.makeText(Signup.this,message,Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -155,14 +185,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Login.this,error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(Signup.this,"Something Went Wrong", Toast.LENGTH_LONG).show();
                     }
                 }){
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
 
+                params.put("name",user.getName());
                 params.put("email",user.getEmail());
                 params.put("password",user.getPassword());
+                params.put("mobile",user.getMobile());
                 return params;
             }
 
@@ -170,8 +202,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
 
-
-    }
+        }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

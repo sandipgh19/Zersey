@@ -1,9 +1,7 @@
 package com.example.sandipghosh.zersey;
 
 import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -11,6 +9,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.sandipghosh.zersey.ImageDisplay.SecondActivity;
+import com.example.sandipghosh.zersey.SupportingFiles.Config;
+import com.example.sandipghosh.zersey.SupportingFiles.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;

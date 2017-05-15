@@ -1,10 +1,13 @@
-package com.example.sandipghosh.zersey;
+package com.example.sandipghosh.zersey.auth;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.sandipghosh.zersey.ImageDisplay.MainActivity;
+import com.example.sandipghosh.zersey.ImageDisplay.SecondActivity;
 
 /**
  * Created by sandipghosh on 11/05/17.

@@ -1,4 +1,4 @@
-package com.example.sandipghosh.zersey;
+package com.example.sandipghosh.zersey.SupportingFiles;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.example.sandipghosh.zersey.R;
 
 /**
  * Created by sandipghosh on 10/05/17.

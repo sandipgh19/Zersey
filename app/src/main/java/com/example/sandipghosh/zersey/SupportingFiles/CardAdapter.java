@@ -1,4 +1,4 @@
-package com.example.sandipghosh.zersey;
+package com.example.sandipghosh.zersey.SupportingFiles;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.sandipghosh.zersey.Comment;
+import com.example.sandipghosh.zersey.R;
 
 import java.util.ArrayList;
 import java.util.List;

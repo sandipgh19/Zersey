@@ -1,4 +1,4 @@
-package com.example.sandipghosh.zersey;
+package com.example.sandipghosh.zersey.ImageDisplay;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -6,7 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
-import org.json.JSONObject;
+import com.example.sandipghosh.zersey.ImageDisplay.MainActivity;
+import com.example.sandipghosh.zersey.SupportingFiles.Config;
 
 import java.net.URL;
 
