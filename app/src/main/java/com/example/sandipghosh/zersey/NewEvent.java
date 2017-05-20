@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
@@ -15,6 +17,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +29,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.sandipghosh.zersey.ImageDisplay.MainActivity;
 import com.example.sandipghosh.zersey.ImageDisplay.SecondActivity;
 import com.example.sandipghosh.zersey.SupportingFiles.FilePath;
@@ -33,6 +43,10 @@ import com.example.sandipghosh.zersey.SupportingFiles.FilePath;
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.UploadNotificationConfig;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -45,7 +59,7 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
     private static final int PICK_FILE_REQUEST = 1;
     private static final String TAG = MainActivity.class.getSimpleName();
     private String selectedFilePath;
-    private String SERVER_URL = "https://sandipgh19.000webhostapp.com/zersey/send.php";
+    private String SERVER_URL = "https://sandipgh19.000webhostapp.com/zersey/send1.php";
     ImageView ivAttachment;
     Button bUpload;
     TextView tvFileName;
@@ -54,6 +68,7 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
     SharedPreferences sharedPreferences;
     String name,email;
     Toolbar toolbar;
+    private Bitmap bitmap;
     private TextInputLayout titleInput;
     private TextInputLayout categoryInput;
     private TextInputLayout descriptionInput;
@@ -76,6 +91,9 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
         sharedPreferences = getSharedPreferences("ZerseyDetails", Context.MODE_PRIVATE);
         name = sharedPreferences.getString("name","");
         email = sharedPreferences.getString("email","");
+
+        Log.i("MYEmail",email);
+        Log.i("MYName",name);
 
         title = (EditText) findViewById(R.id.title);
         category = (EditText) findViewById(R.id.category);
@@ -174,15 +192,8 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
             //on upload button Click
             if(selectedFilePath != null){
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //creating new thread to handle Http Operations
-                        uploadFile(selectedFilePath);
-                    }
-                }).start();
+                uploadFile();
 
-              // sendData();
             }else{
                 Toast.makeText(NewEvent.this,"Please choose a File First",Toast.LENGTH_SHORT).show();
             }
@@ -201,6 +212,14 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
         startActivityForResult(Intent.createChooser(intent,"Choose File to Upload.."),PICK_FILE_REQUEST);
     }
 
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -213,6 +232,11 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
 
 
                 Uri selectedFileUri = data.getData();
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedFileUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 selectedFilePath = FilePath.getPath(this,selectedFileUri);
                 Log.i(TAG,"Selected File Path:" + selectedFilePath);
 
@@ -226,34 +250,68 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
     }
 
     //android upload file to server
-    public void uploadFile(final String selectedFilePath){
-
+    public void uploadFile(){
 
         //Uploading code
-        try {
-            String uploadId = UUID.randomUUID().toString();
+        final ProgressDialog loading = ProgressDialog.show(this,"Uploading...","Please wait...",false,false);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, SERVER_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        //Disimissing the progress dialog
+                        loading.dismiss();
+                        //Showing toast message of the response
+                        Log.i("MY",s);
 
-            //Creating a multi part request
-            new MultipartUploadRequest(this, uploadId, SERVER_URL)
-                    .addFileToUpload(selectedFilePath, "uploaded_file") //Adding file
-                    .addParameter("title", userTitle)//Adding text parameter to the request
-                    .addParameter("category",userCatagory)
-                    .addParameter("description",userDescription)
-                    .addParameter("email",email)
-                    .addParameter("name",name)
-                    .setNotificationConfig(new UploadNotificationConfig())
-                    .setMaxRetries(2)
-                    .startUpload(); //Starting the upload
+                        if(s.equals("Success")){
 
-        } catch (Exception exc) {
-            Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+                            Toast.makeText(NewEvent.this, s , Toast.LENGTH_LONG).show();
 
-       // dialog.dismiss();
+                            Intent intent = new Intent(NewEvent.this,SecondActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(NewEvent.this, s , Toast.LENGTH_LONG).show();
+                        }
 
-        //Intent intent = new Intent(this,SecondActivity.class);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-       // startActivity(intent);
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        //Dismissing the progress dialog
+                        loading.dismiss();
+
+                        //Showing toast
+                        Toast.makeText(NewEvent.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                //Creating parameters
+                Map<String,String> params = new Hashtable<String, String>();
+
+                //Adding parameters
+                params.put("image", getStringImage(bitmap));
+                params.put("title", userTitle);
+                params.put("category",userCatagory);
+                params.put("description",userDescription);
+                params.put("email",email);
+                params.put("name",name);
+
+                //returning parameters
+                return params;
+            }
+        };
+
+        //Creating a Request Queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        //Adding request to the queue
+        requestQueue.add(stringRequest);
 
 
 
@@ -271,23 +329,13 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
-                Intent intent = new Intent(this,SecondActivity.class);
+                Intent intent = new Intent(this, SecondActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed(){
-        // code here to show dialog
-       // super.onBackPressed();  // optional depending on your needs
-        Intent intent = new Intent(this,SecondActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
     }
 
 }

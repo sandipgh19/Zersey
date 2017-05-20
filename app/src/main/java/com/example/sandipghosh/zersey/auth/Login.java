@@ -137,8 +137,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                 user.setName(Data.getString("name"));
                                 user.setMobile(Data.getString("mobile"));
                                 User.saveLoginCredentials(sharedPreferences,
-                                        user.getEmail(),
                                         user.getName(),
+                                        user.getEmail(),
                                         user.getMobile());
                                 Intent intent = new Intent(getApplicationContext(), SecondActivity.class);
                                 setResult(RESULT_OK, intent);
