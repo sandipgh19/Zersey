@@ -161,6 +161,10 @@ public class NewEvent extends AppCompatActivity implements View.OnClickListener 
             userCatagory = category.getText().toString();
             userDescription = description.getText().toString();
 
+            titleInput.setErrorEnabled(false);
+            categoryInput.setErrorEnabled(false);
+            descriptionInput.setErrorEnabled(false);
+
             Log.i("user11",userTitle);
             Log.i("user12",userCatagory);
             Log.i("user13",userDescription);
