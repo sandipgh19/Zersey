@@ -34,3 +34,4 @@ dependencies {
     compile 'net.gotev:uploadservice:2.1'
     testCompile 'junit:junit:4.12'
 }
+apply plugin: 'com.google.gms.google-services'
