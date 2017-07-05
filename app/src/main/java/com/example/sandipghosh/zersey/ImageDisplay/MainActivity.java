@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         sharedPreferences = getSharedPreferences("ZerseyDetails", Context.MODE_PRIVATE);
 
-        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+     /*   mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
 
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity
                    // txtMessage.setText(message);
                 }
             }
-        };
+        };*/
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -311,7 +311,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    @Override
+ /*   @Override
     protected void onResume() {
         super.onResume();
 
@@ -332,5 +332,5 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
-    }
+    }*/
 }
