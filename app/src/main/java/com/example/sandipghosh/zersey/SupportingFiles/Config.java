@@ -24,6 +24,20 @@ public class Config {
     public static final String URL_REQUEST_SMS = "https://sandipgh19.000webhostapp.com/zersey/request_sms.php";
     public static final String URL_VERIFY_OTP = "https://sandipgh19.000webhostapp.com/zersey/verify_otp.php";
 
+
+    // global topic to receive app wide push notifications
+    public static final String TOPIC_GLOBAL = "global";
+
+    // broadcast receiver intent filters
+    public static final String REGISTRATION_COMPLETE = "registrationComplete";
+    public static final String PUSH_NOTIFICATION = "pushNotification";
+
+    // id to handle the notification in the notification tray
+    public static final int NOTIFICATION_ID = 100;
+    public static final int NOTIFICATION_ID_BIG_IMAGE = 101;
+
+    public static final String SHARED_PREF = "ah_firebase";
+
     // SMS provider identification
     // It should match with your SMS gateway origin
     // You can use  MSGIND, TESTER and ALERTS as sender ID
